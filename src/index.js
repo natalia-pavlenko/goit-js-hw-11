@@ -12,16 +12,6 @@ const simpleligthbox = new SimpleLightbox('.gallery a', { loop: false });
 let searchQuery = null;
 let page = null;
 
-// const simpleligthbox = new SimpleLightbox('.gallery a', { loop: false });
-// const perPage = 40;
-// let page = 1;
-// let observer = null;
-// const options = {
-//   root: null,
-//   rootMargin: '600px',
-//   threshold: 1.0,
-// };
-
 searchForm.addEventListener('submit', onFormSubmit);
 function onFormSubmit(evt) {
   evt.preventDefault();
@@ -31,28 +21,6 @@ function onFormSubmit(evt) {
   divGallery.innerHTML = '';
   loadBtn.classList.add('visually-hidden');
 
-  //       if (page === totalHits) {
-  //           console.log(page);
-  //           Notify.info( `We're sorry, but you've reached the end of search results.`
-  //       }
-  //       changeFormOpacity();
-  //       page += 1;
-  //     })
-
-  //   .catch(error => {
-  //     if (!data.totalHits) {
-  //       Notify.failure(
-  //            'Sorry, there are no images matching your search query. Please try again.'
-  //          );
-  //          divGallery.innerHTML = '';
-  //          return;
-  //        }
-  //        observer.unobserve(guard);
-  //   })
-  //   .then
-
-  //   () => simpleligthbox.refresh()
-  //   ();
 
   GetPhoto(searchQuery, page)
     .then(response => {
@@ -85,6 +53,7 @@ function onSubmit(evt) {
   GetPhoto(searchQuery, page)
     .then(response => {
       addMoreImages(response.data.hits);
+    
       simpleligthbox.refresh();
       smoothImagesScroll();
       if (page === Math.ceil(response.data.totalHits / 40)) {
@@ -139,6 +108,7 @@ function createMarkup(array) {
 
 function addMoreImages(array) {
   divGallery.insertAdjacentHTML('beforeend', createMarkup(array));
+  simpleligthbox.refresh();
 }
 
 function smoothImagesScroll() {
